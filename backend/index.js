@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize Supabase Admin client
-const supabaseUrl = "https://mhncmxpmldzrmheeurkf.supabase.co";
-const supabaseServiceKey = "sb_secret_8hfDMoHxCq-7G0P4WOsweA_mDOxPF0z";
+const supabaseUrl = process.env.SUPABASE_URL || "https://mhncmxpmldzrmheeurkf.supabase.co";
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_8hfDMoHxCq-7G0P4WOsweA_mDOxPF0z";
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error("Missing Supabase configuration variables.");
@@ -29,8 +29,8 @@ const supabaseAdmin = createClient(supabaseUrl || "", supabaseServiceKey || "", 
 
 // SMTP Nodemailer Transporter Configuration (Google SMTP)
 const adminEmail = process.env.ADMIN_EMAIL || "freezingtheframes@gmail.com";
-const smtpUser = "freezingtheframes@gmail.com"; // Your Gmail address (e.g. user@gmail.com)
-const smtpPass = "dsvk yhah kyrt aioc"; // Your Google App Password (not your main password)
+const smtpUser = process.env.SMTP_USER || "freezingtheframes@gmail.com"; // Your Gmail address
+const smtpPass = process.env.SMTP_PASS || "dsvk yhah kyrt aioc"; // Your Google App Password
 
 let transporter = null;
 if (smtpUser && smtpPass) {
