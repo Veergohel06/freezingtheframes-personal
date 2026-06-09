@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import { CustomCursor } from "@/components/site/CustomCursor";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../styles.css";
 
 export const metadata: Metadata = {
@@ -63,6 +64,7 @@ export default function RootLayout({
         <Toaster position="top-center" theme="dark" richColors />
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
