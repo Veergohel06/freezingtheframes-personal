@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize Supabase Admin client
-const supabaseUrl = process.env.SUPABASE_URL || "https://mhncmxpmldzrmheeurkf.supabase.co";
+const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mhncmxpmldzrmheeurkf.supabase.co";
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "sb_secret_8hfDMoHxCq-7G0P4WOsweA_mDOxPF0z";
 
 if (!supabaseUrl || !supabaseServiceKey) {

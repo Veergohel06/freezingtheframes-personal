@@ -19,15 +19,10 @@ export function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
             whileHover={{ scale: 1.02, rotate: 1 }}
-            className="bg-[#fcfbf7] p-4 pb-10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-[#f0eee4] w-full max-w-[340px] relative group cursor-pointer"
+            className="bg-[#fcfbf7] p-4 pb-10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-[#f0eee4] w-full max-w-[280px] relative group cursor-pointer"
           >
-            {/* Top Tag */}
-            <div className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-bold mb-3">
-              IT'S ME
-            </div>
-
             {/* Main Portrait Frame */}
-            <div className="w-full aspect-[4/5] relative bg-zinc-900 rounded overflow-hidden">
+            <div className="w-full aspect-[4/3.3] relative bg-zinc-900 rounded overflow-hidden">
               <Image
                 src={portrait}
                 alt="Veer Gohel — founder of Freezing The Frames"
@@ -38,12 +33,9 @@ export function About() {
             </div>
 
             {/* Bottom Details Box inside card */}
-            <div className="pt-4 space-y-1">
-              <span className="font-display font-bold text-xl text-zinc-800 tracking-tight block">
-                VEER GOHEL
-              </span>
-              <span className="text-[10px] text-zinc-500 font-medium block">
-                Instagram: @freezingtheframes
+            <div className="pt-6 pb-2 text-center">
+              <span className="font-serif italic text-lg text-zinc-700 block">
+                Veer Gohel
               </span>
             </div>
 
