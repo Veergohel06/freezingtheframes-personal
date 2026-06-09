@@ -80,11 +80,12 @@ app.post("/api/enquiries", async (req, res) => {
       return res.status(500).json({ error: "Failed to store enquiry in database." });
     }
 
-    // Trigger Admin Email Alert via Nodemailer (Google SMTP)
+    // Trigger Emails via Nodemailer (Google SMTP)
     if (transporter) {
       try {
+        // 1. Send Admin Notification Email
         await transporter.sendMail({
-          from: `"freezingtheframes" <${smtpUser}>`,
+          from: `"Freezing The Frames" <${smtpUser}>`,
           to: adminEmail,
           subject: `✨ New Creative Enquiry - ${name}`,
           html: `
@@ -161,8 +162,57 @@ app.post("/api/enquiries", async (req, res) => {
             </div>
           `,
         });
+
+        // 2. Send Client Confirmation Email
+        await transporter.sendMail({
+          from: `"Freezing The Frames" <${smtpUser}>`,
+          to: email,
+          subject: `✨ We've received your enquiry - Freezing The Frames`,
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #050505; padding: 40px 20px; color: #e5e5e7; max-width: 600px; margin: 0 auto; border-radius: 20px; border: 1px solid #1a1a1a;">
+              <!-- Header -->
+              <div style="text-align: center; border-bottom: 1px solid #1a1a1a; padding-bottom: 24px; margin-bottom: 32px;">
+                <div style="font-size: 24px; font-weight: 700; letter-spacing: 3px; color: #ffffff; text-transform: uppercase;">
+                  Freezing The Frames
+                </div>
+                <div style="font-size: 11px; color: #e5b869; margin: 8px 0 0 0; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">
+                  Enquiry Received
+                </div>
+              </div>
+
+              <!-- Message -->
+              <div style="padding: 0 10px; line-height: 1.6; font-size: 15px;">
+                <p>Hello ${name},</p>
+                <p>Thank you for reaching out to <strong>Freezing The Frames</strong>. We have successfully received your project enquiry!</p>
+                <p>I am thrilled about the opportunity to collaborate and bring your vision to life. I am currently reviewing the details you shared and will get back to you shortly (usually within 24-48 hours) to discuss the next steps.</p>
+                
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid #222222; border-radius: 12px; padding: 20px; margin: 28px 0;">
+                  <p style="margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #e5b869; font-weight: 600;">Your Enquiry Details:</p>
+                  <ul style="margin: 0; padding-left: 20px; color: #d2d2d7; font-size: 14px; list-style-type: square; line-height: 22px;">
+                    <li><strong>Project Type:</strong> ${project_type || "Not specified"}</li>
+                    <li><strong>Preferred Date:</strong> ${preferred_date || "Not specified"}</li>
+                    <li><strong>Budget Range:</strong> ${budget_range || "Not specified"}</li>
+                  </ul>
+                </div>
+
+                <p>In the meantime, feel free to explore more of my work on Instagram <a href="https://instagram.com/freezingtheframes" style="color: #e5b869; text-decoration: none; font-weight: 500;">@freezingtheframes</a>.</p>
+                
+                <p style="margin-top: 40px; line-height: 20px;">
+                  Warm regards,<br>
+                  <strong style="color: #ffffff;">Veer Gohel</strong><br>
+                  <span style="font-size: 12px; color: #86868b;">Founder, Freezing The Frames</span>
+                </p>
+              </div>
+
+              <!-- Footer -->
+              <div style="text-align: center; font-size: 11px; color: #86868b; border-top: 1px solid #1a1a1a; padding-top: 24px; margin-top: 40px;">
+                <p style="margin: 0;">&copy; ${new Date().getFullYear()} Freezing The Frames. All rights reserved.</p>
+              </div>
+            </div>
+          `,
+        });
       } catch (emailErr) {
-        console.error("SMTP email notification sending failed:", emailErr);
+        console.error("SMTP email sending failed:", emailErr);
       }
     } else {
       console.warn("SMTP credentials not configured. Email notification skipped.");
