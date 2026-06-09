@@ -49,10 +49,8 @@ export function Nav() {
     >
       <div className="glass glow-border rounded-3xl md:rounded-full px-4 md:px-6 py-2.5 flex items-center justify-between shadow-lg relative z-50">
         
-        {/* Left Side: Brand Logo/Text */}
-        <a href="#" className="font-display font-bold text-sm tracking-[0.2em] text-foreground hover:opacity-85 transition-opacity pl-2">
-          FTF<span className="text-accent font-serif">.</span>
-        </a>
+        {/* Spacer to keep original navbar alignment after removing logo */}
+        <div className="hidden md:block w-24 shrink-0" />
 
         {/* Navigation Links (Desktop) */}
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
